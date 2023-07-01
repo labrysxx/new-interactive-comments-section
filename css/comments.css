@@ -1,0 +1,96 @@
+#comment, #answer {
+    display: grid;
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    grid-template-columns: 80px 140px;
+}
+
+#answer {
+    width: 70%;
+    float: right;
+}
+
+.image {
+    grid-column: 1/2;
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+.author_name {
+    grid-column: 2/3;
+}
+
+.date {
+    grid-column: 3/4;
+}
+
+.reply_field {
+    grid-column: 4/5;
+}
+
+.reply_field, .edit-btn {
+    color: var(--moderate-blue);
+    font-weight: bold;
+}
+
+.reply_field:hover, .edit-btn:hover {
+    color: var(--light-grayish-blue);
+    cursor: pointer;
+}
+
+.delete-btn {
+    font-weight: bold;
+    color: var(--soft-red);
+    margin-left: 10px;
+}
+
+.delete-btn:hover {
+    cursor: pointer;
+    color: var(--pale-red);
+}
+
+.edit-delete-btns {
+    grid-column: 4/5;
+}
+
+.text {
+    grid-column: 1/5;
+    word-wrap: anywhere;
+}
+
+.edit-delete-btns, .reply_field {
+    justify-self: end;
+}
+
+.author_name, .date, .edit-delete-btns, .reply_field {
+    align-self: center;
+}
+
+form {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    width: 50%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+textarea {
+    width: 100%;
+}
+
+#submit_btn {
+    height: 40px;
+    width: 17%;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--moderate-blue);
+    color: white;
+}
