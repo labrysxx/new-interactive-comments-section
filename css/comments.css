@@ -7,9 +7,14 @@
     grid-template-columns: 80px 140px;
 }
 
+#comment {
+    width: -moz-available;
+}
+
 #answer {
     width: 70%;
     float: right;
+    margin-bottom: 10px;
 }
 
 .image {
