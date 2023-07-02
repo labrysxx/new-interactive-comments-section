@@ -94,3 +94,8 @@ textarea {
     background-color: var(--moderate-blue);
     color: white;
 }
+
+#submit_btn:hover {
+    cursor: pointer;
+    background-color: var(--light-grayish-blue);
+}

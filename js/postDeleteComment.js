@@ -1,5 +1,6 @@
 const form = document.getElementById('comment_field')
-const main = document.querySelector('.container')
+const postDeleteComment = document.querySelector('.container')
+const textarea = document.querySelector('textarea')
 
 form.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -25,6 +26,9 @@ form.addEventListener('submit', (e) => {
 
     postComment(commentData);
     upCommentMade(commentData)
+
+    // limpa textarea ao enviar o formulário
+    textarea.value = ''
 })
 
 window.addEventListener('DOMContentLoaded', (e) => {
@@ -48,10 +52,10 @@ window.addEventListener('DOMContentLoaded', (e) => {
                             ` : `
                                 <span class="reply_field">Reply</span>
                             `}
-                            <p class="text">${mainComment.body}</p>
+                            <p class="text" data-current-id="${mainComment._id}">${mainComment.body}</p>
                         </section>
                     `
-                main.insertAdjacentHTML('afterbegin', commentTemplate)
+                postDeleteComment.insertAdjacentHTML('afterbegin', commentTemplate)
 
                 if(mainComment.answers.length !== 0) {
                     const commentSection = document.getElementById('comment')
@@ -69,7 +73,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
                                 ` : `
                                     <span class="reply_field">Reply</span>
                                 `}
-                                <p class="text">${answer.body}</p>
+                                <p class="text" data-current-id="${answer._id}">${answer.body}</p>
                             </section>
                         `
                         commentSection.insertAdjacentHTML('afterend', answerTemplate)
@@ -78,6 +82,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
                 }
             })
             deleteComment()
+            patchComment()
         })
 })
 
@@ -114,12 +119,13 @@ function upCommentMade(comment) {
                 <span class="edit-btn">Edit</span>
                 <span class="delete-btn">Delete</span>
             </div>
-            <p class="text">${comment.body}</p>
+            <p class="text" data-current-id="${comment._id}">${comment.body}</p>
       
         </section>
     `
-    main.insertAdjacentHTML('afterbegin', commentTemplate)
+    postDeleteComment.insertAdjacentHTML('afterbegin', commentTemplate)
     deleteComment()
+    patchComment()
 }
 
 function deleteComment() {
