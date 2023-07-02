@@ -99,3 +99,16 @@ textarea {
     cursor: pointer;
     background-color: var(--light-grayish-blue);
 }
+
+.save-btn {
+    border: none;
+    padding: 10px;
+    background-color: var(--moderate-blue);
+    color: white;
+    border-radius: 10px;
+}
+
+.save-btn:hover {
+    cursor: pointer;
+    background-color: var(--light-grayish-blue);
+}
