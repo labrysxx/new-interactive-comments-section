@@ -1,6 +1,6 @@
 const form = document.getElementById('comment_field')
-const postDeleteComment = document.querySelector('.container')
-const textarea = document.querySelector('textarea')
+const postDelete = document.querySelector('.container')
+const textarea = document.getElementById('new-comment')
 
 form.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -31,15 +31,16 @@ form.addEventListener('submit', (e) => {
     textarea.value = ''
 })
 
-window.addEventListener('DOMContentLoaded', (e) => {
-    e.preventDefault()
-    fetch('https://comments-l19n.onrender.com/comments')
-        .then(response => response.json())
-        .then(data => {
-            data.forEach((mainComment) => {
-                const commentDate = new Date(mainComment.date);
-                const timeAgo = calculateTimeAgo(commentDate);
-                const commentTemplate = `
+function carregaCommentAndAnswer() {
+    window.addEventListener('DOMContentLoaded', (e) => {
+        e.preventDefault()
+        fetch('https://comments-l19n.onrender.com/comments')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach((mainComment) => {
+                    const commentDate = new Date(mainComment.date);
+                    const timeAgo = calculateTimeAgo(commentDate);
+                    const commentTemplate = `
                         <section id="comment" data-id="${mainComment._id}">
                             <img src="${mainComment.author.image}" class="image" alt="">
                             <span class="author_name">${mainComment.author.name}</span>
@@ -55,13 +56,13 @@ window.addEventListener('DOMContentLoaded', (e) => {
                             <p class="text" data-current-id="${mainComment._id}">${mainComment.body}</p>
                         </section>
                     `
-                postDeleteComment.insertAdjacentHTML('afterbegin', commentTemplate)
+                    postDelete.insertAdjacentHTML('afterbegin', commentTemplate)
 
-                if(mainComment.answers.length !== 0) {
-                    const commentSection = document.getElementById('comment')
-                    mainComment.answers.forEach((answer) => {
-                        const answerTemplate = `
-                            <section id="answer" data-id="${answer._id}">
+                    if(mainComment.answers.length !== 0) {
+                        const commentSection = document.getElementById('comment')
+                        mainComment.answers.forEach((answer) => {
+                            const answerTemplate = `
+                            <section id="answer" data-id="${mainComment._id}">
                                 <img src="${answer.author.image}" class="image" alt="">
                                 <span class="author_name">${answer.author.name}</span>
                                 <span class="date">${timeAgo}</span>
@@ -76,15 +77,19 @@ window.addEventListener('DOMContentLoaded', (e) => {
                                 <p class="text" data-current-id="${answer._id}">${answer.body}</p>
                             </section>
                         `
-                        commentSection.insertAdjacentHTML('afterend', answerTemplate)
-                    })
+                            commentSection.insertAdjacentHTML('afterend', answerTemplate)
+                        })
 
-                }
+                    }
+                })
+                deleteComment()
+                patch()
+                replyBox()
             })
-            deleteComment()
-            patchComment()
-        })
-})
+    })
+}
+
+carregaCommentAndAnswer()
 
 function isGraceComment(authorName) {
     return authorName === 'Grace';
@@ -123,9 +128,10 @@ function upCommentMade(comment) {
       
         </section>
     `
-    postDeleteComment.insertAdjacentHTML('afterbegin', commentTemplate)
+    postDelete.insertAdjacentHTML('afterbegin', commentTemplate)
+    location.reload();
     deleteComment()
-    patchComment()
+    patch()
 }
 
 function deleteComment() {
@@ -153,6 +159,7 @@ function deleteComment() {
             .then(response => {
                 if (response.ok) {
                     commentSectionToDelete.remove();
+                    carregaCommentAndAnswer()
                     console.log('Comentário excluído com sucesso!');
                 } else {
                     console.error('Erro ao excluir o comentário:', response.statusText);

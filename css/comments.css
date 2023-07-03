@@ -8,7 +8,7 @@
 }
 
 #comment {
-    width: -moz-available;
+    width: calc(100% - 20px);
 }
 
 #answer {
@@ -116,4 +116,8 @@ textarea {
 .save-btn:hover {
     cursor: pointer;
     background-color: var(--light-grayish-blue);
+}
+
+#answer_field {
+    width: calc(100% - 40px);
 }

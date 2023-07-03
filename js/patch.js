@@ -1,4 +1,4 @@
-function patchComment() {
+function patch() {
     const editBtns = document.querySelectorAll('.edit-btn');
 
     editBtns.forEach((editBtn) => {
