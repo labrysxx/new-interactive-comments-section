@@ -41,7 +41,7 @@ function carregaCommentAndAnswer() {
                     const commentDate = new Date(mainComment.date);
                     const timeAgo = calculateTimeAgo(commentDate);
                     const commentTemplate = `
-                        <section id="comment" data-id="${mainComment._id}">
+                        <section class="comment comment-answer" data-id="${mainComment._id}">
                             <img src="${mainComment.author.image}" class="image" alt="">
                             <span class="author_name">${mainComment.author.name}</span>
                             <span class="date">${timeAgo}</span>
@@ -56,28 +56,30 @@ function carregaCommentAndAnswer() {
                             <p class="text" data-current-id="${mainComment._id}">${mainComment.body}</p>
                         </section>
                     `
-                    postDelete.insertAdjacentHTML('afterbegin', commentTemplate)
+                    postDelete.insertAdjacentHTML('beforeend', commentTemplate)
 
                     if(mainComment.answers.length !== 0) {
-                        const commentSection = document.getElementById('comment')
+                        const commentSection = document.querySelector(`.comment[data-id="${mainComment._id}"]`)
                         mainComment.answers.forEach((answer) => {
+                            const answerDate = new Date(answer.date);
+                            const answerTimeAgo = calculateTimeAgo(answerDate);
                             const answerTemplate = `
-                            <section id="answer" data-id="${mainComment._id}">
-                                <img src="${answer.author.image}" class="image" alt="">
-                                <span class="author_name">${answer.author.name}</span>
-                                <span class="date">${timeAgo}</span>
-                                ${isGraceComment(answer.author.name) ? `
+                                <section class="answer comment-answer" data-id="${mainComment._id}">
+                                  <img src="${answer.author.image}" class="image" alt="">
+                                  <span class="author_name">${answer.author.name}</span>
+                                  <span class="date">${answerTimeAgo}</span>
+                                  ${isGraceComment(answer.author.name) ? `
                                     <div class="edit-delete-btns">
-                                        <span class="edit-btn">Edit</span>
-                                        <span class="delete-btn">Delete</span>
+                                      <span class="edit-btn">Edit</span>
+                                      <span class="delete-btn">Delete</span>
                                     </div>
-                                ` : `
+                                  ` : `
                                     <span class="reply_field">Reply</span>
-                                `}
-                                <p class="text" data-current-id="${answer._id}">${answer.body}</p>
-                            </section>
-                        `
-                            commentSection.insertAdjacentHTML('afterend', answerTemplate)
+                                  `}
+                                  <p class="text" data-current-id="${answer._id}"><span class="first-word">@${mainComment.author.name.toLowerCase()}</span>, ${answer.body}</p>
+                                </section>
+                            `;
+                            commentSection.insertAdjacentHTML('afterend', answerTemplate);
                         })
 
                     }
@@ -85,6 +87,12 @@ function carregaCommentAndAnswer() {
                 deleteComment()
                 patch()
                 replyBox()
+
+                const firstWords = document.querySelectorAll('.text .first-word');
+                firstWords.forEach(word => {
+                    word.style.color = 'var(--moderate-blue)';
+                    word.style.fontWeight = 'bold'
+                });
             })
     })
 }
@@ -116,7 +124,7 @@ function upCommentMade(comment) {
     const commentDate = new Date(comment.date);
     const timeAgo = calculateTimeAgo(commentDate);
     const commentTemplate = `
-        <section id="comment" data-id="${comment._id}">
+        <section class="comment comment-answer" data-id="${comment._id}">
             <img src="${comment.author.image}" class="image" alt="">
             <span class="author_name">${comment.author.name}</span>
             <span class="date">${timeAgo}</span>
@@ -128,8 +136,8 @@ function upCommentMade(comment) {
       
         </section>
     `
-    postDelete.insertAdjacentHTML('afterbegin', commentTemplate)
-    location.reload();
+    postDelete.insertAdjacentHTML('beforeend', commentTemplate)
+
     deleteComment()
     patch()
 }
@@ -144,7 +152,8 @@ function deleteComment() {
     deleteBtns.forEach((btn) => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            commentSectionToDelete = btn.closest('#comment');
+            console.log(btn)
+            commentSectionToDelete = btn.closest('.comment-answer');
             modal.style.display = 'block';
         })
     })

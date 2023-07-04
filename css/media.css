@@ -17,15 +17,15 @@
         grid-row: 3/4;
     }
 
-    #answer {
+    .answer {
         width: 85%;
     }
 
-    #comment, #answer {
+    .comment, .answer {
         grid-template-columns: 80px auto;
     }
 
-    #submit_btn {
+    .submit_btn {
         margin-top: 10px;
         justify-self: end;
         align-self: center;
@@ -34,7 +34,7 @@
         width: 100%;
     }
 
-    #submit_btn:hover {
+    .submit_btn:hover {
         cursor: pointer;
         background-color: var(--light-grayish-blue);
     }
