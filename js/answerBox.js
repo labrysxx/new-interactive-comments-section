@@ -45,8 +45,39 @@ function catchAnswer() {
             }
 
             const closestIdComment = commentElement.dataset.id;
+
+            const new_answer_template = {
+                "author": {
+                    "name": "Grace",
+                    "image": "https://cdn.pixabay.com/photo/2013/07/12/19/28/grace-hopper-154833_960_720.png"
+                },
+                "body": `${answer_content}`,
+                "date": new Date(),
+                "meta": {
+                    "votes": 0
+                }
+            }
+
+            postNewAnswer(closestIdComment, new_answer_template)
         });
     }
+}
+
+function postNewAnswer(id, answer) {
+    fetch(`https://comments-l19n.onrender.com/comments/${id}/answers`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(answer)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Resposta enviada com sucesso!', data);
+        })
+        .catch(error => {
+            console.error('Erro ao enviar a resposta:', error);
+        });
 }
 
 

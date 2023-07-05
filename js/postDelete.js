@@ -168,7 +168,11 @@ function deleteComment() {
             .then(response => {
                 if (response.ok) {
                     commentSectionToDelete.remove();
-                    carregaCommentAndAnswer()
+
+                    // remove as respostas associadas ao comentário
+                    const answerSections = document.querySelectorAll(`.answer[data-id="${commentId}"]`);
+                    answerSections.forEach(answerSection => answerSection.remove());
+
                     console.log('Comentário excluído com sucesso!');
                 } else {
                     console.error('Erro ao excluir o comentário:', response.statusText);
