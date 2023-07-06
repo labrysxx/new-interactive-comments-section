@@ -44,6 +44,7 @@ function catchAnswer() {
                 commentElement = commentElement.previousElementSibling;
             }
 
+            const answerId = e.target.previousElementSibling.dataset.answerId
             const closestIdComment = commentElement.dataset.id;
 
             const new_answer_template = {
@@ -58,26 +59,13 @@ function catchAnswer() {
                 }
             }
 
-            postNewAnswer(closestIdComment, new_answer_template)
+            if(answerId) {
+                postAnswerToAnswer(closestIdComment, answerId, new_answer_template)
+            } else {
+                postNewAnswer(closestIdComment, new_answer_template)
+            }
         });
     }
-}
-
-function postNewAnswer(id, answer) {
-    fetch(`https://comments-l19n.onrender.com/comments/${id}/answers`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(answer)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Resposta enviada com sucesso!', data);
-        })
-        .catch(error => {
-            console.error('Erro ao enviar a resposta:', error);
-        });
 }
 
 
