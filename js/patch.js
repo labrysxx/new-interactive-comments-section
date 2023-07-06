@@ -7,8 +7,10 @@ function patch() {
             const commentSection = e.target.parentNode.parentNode;
             const paragraph = commentSection.querySelector('.text');
             paragraph.contentEditable = true;
+            let answerId = paragraph.parentNode.dataset.answerId
+            let commentId = paragraph.parentNode.dataset.id
+            let answerAnswerId = paragraph.parentNode.dataset.replyId
 
-            // Check if the "Save" button already exists
             const saveBtn = commentSection.querySelector('.save-btn');
 
             if (!saveBtn) {
@@ -22,35 +24,14 @@ function patch() {
                     newSaveBtn.style.display = 'none';
                     newSaveBtn.remove();
 
-                    const commentId = paragraph.dataset.currentId;
-                    const updatedComment = {
-                        "author": {
-                            "name": "Grace",
-                            "image": "https://cdn.pixabay.com/photo/2013/07/12/19/28/grace-hopper-154833_960_720.png"
-                        },
-                        "meta": {
-                            "votes": 0
-                        },
-                        "body": `${paragraph.textContent}`
-                    };
+                    if (commentId && !answerId && !answerAnswerId) {
+                        patchComment(paragraph)
+                    } else if (commentId && answerId && !answerAnswerId) {
+                        patchAnswer(paragraph, commentId, answerId)
+                    } else if (commentId && answerId && answerAnswerId) {
+                        patchAnswerToAnswer(paragraph, commentId, answerId,answerAnswerId)
+                    }
 
-                    console.log(JSON.stringify(updatedComment))
-
-                    // send the updated comment data to the server
-                    fetch(`https://comments-l19n.onrender.com/comments/${commentId}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(updatedComment), // convert the data to JSON string
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log('Comment updated successfully!', data);
-                        })
-                        .catch(error => {
-                            console.error('Error updating the comment:', error);
-                        });
                 });
 
                 commentSection.appendChild(newSaveBtn);
@@ -59,4 +40,87 @@ function patch() {
     });
 }
 
+function patchComment(paragraph) {
+    const currentId = paragraph.dataset.currentId;
+    const updatedComment = {
+        "author": {
+            "name": "Grace",
+            "image": "https://cdn.pixabay.com/photo/2013/07/12/19/28/grace-hopper-154833_960_720.png"
+        },
+        "meta": {
+            "votes": 0
+        },
+        "body": `${paragraph.textContent}`
+    };
 
+    fetch(`https://comments-l19n.onrender.com/comments/${currentId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedComment)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('comentário atualizado com sucesso!', data);
+        })
+        .catch(error => {
+            console.error('erro ao atualizar comentário:', error);
+        });
+}
+
+function patchAnswer(paragraph, commentId, answerId) {
+    const updatedAnswer = {
+        "author": {
+            "name": "Grace",
+            "image": "https://cdn.pixabay.com/photo/2013/07/12/19/28/grace-hopper-154833_960_720.png"
+        },
+        "meta": {
+            "votes": 0
+        },
+        "body": `${paragraph.textContent}`
+    };
+
+    fetch(`https://comments-l19n.onrender.com/comments/${commentId}/answers/${answerId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedAnswer)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('comentário atualizado com sucesso!', data);
+        })
+        .catch(error => {
+            console.error('erro ao atualizar comentário:', error);
+        });
+}
+
+function patchAnswerToAnswer(paragraph, commentId, answerId, answerAnswerId) {
+    const updatedAnswer = {
+        "author": {
+            "name": "Grace",
+            "image": "https://cdn.pixabay.com/photo/2013/07/12/19/28/grace-hopper-154833_960_720.png"
+        },
+        "meta": {
+            "votes": 0
+        },
+        "body": `${paragraph.textContent}`
+    };
+
+    fetch(`https://comments-l19n.onrender.com/comments/${commentId}/answers/${answerId}/replies/${answerAnswerId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedAnswer)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('resposta atualizada com sucesso!', data);
+        })
+        .catch(error => {
+            console.error('erro ao atualizar resposta:', error);
+        });
+}
