@@ -78,7 +78,7 @@ function patchAnswer(paragraph, commentId, answerId) {
         "meta": {
             "votes": 0
         },
-        "body": `${paragraph.textContent}`
+        "body": `${paragraph.textContent.split(' ').slice(1).join(' ')}`
     };
 
     fetch(`https://comments-l19n.onrender.com/comments/${commentId}/answers/${answerId}`, {
@@ -106,7 +106,7 @@ function patchAnswerToAnswer(paragraph, commentId, answerId, answerAnswerId) {
         "meta": {
             "votes": 0
         },
-        "body": `${paragraph.textContent}`
+        "body": `${paragraph.textContent.split(' ').slice(1).join(' ')}`
     };
 
     fetch(`https://comments-l19n.onrender.com/comments/${commentId}/answers/${answerId}/replies/${answerAnswerId}`, {
