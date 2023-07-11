@@ -61,9 +61,6 @@ function patchComment(paragraph) {
         body: JSON.stringify(updatedComment)
     })
         .then(response => response.json())
-        .then(data => {
-            console.log('comentário atualizado com sucesso!', data);
-        })
         .catch(error => {
             console.error('erro ao atualizar comentário:', error);
         });
@@ -89,9 +86,6 @@ function patchAnswer(paragraph, commentId, answerId) {
         body: JSON.stringify(updatedAnswer)
     })
         .then(response => response.json())
-        .then(data => {
-            console.log('comentário atualizado com sucesso!', data);
-        })
         .catch(error => {
             console.error('erro ao atualizar comentário:', error);
         });
@@ -117,9 +111,6 @@ function patchAnswerToAnswer(paragraph, commentId, answerId, answerAnswerId) {
         body: JSON.stringify(updatedAnswer)
     })
         .then(response => response.json())
-        .then(data => {
-            console.log('resposta atualizada com sucesso!', data);
-        })
         .catch(error => {
             console.error('erro ao atualizar resposta:', error);
         });

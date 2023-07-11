@@ -1,4 +1,7 @@
-function replyBox() {
+const answerBoxes = document.querySelectorAll('.answer_field');
+
+function createReplyBox() {
+    removeAnswerFields()
     const replyBtns = document.querySelectorAll('.reply_field');
 
     for (let replyBtn of replyBtns) {
@@ -6,65 +9,70 @@ function replyBox() {
             e.preventDefault();
 
             const currentComment = e.target.parentNode;
-            const replyBox = currentComment.nextElementSibling;
+            const nextBox = currentComment.nextElementSibling;
 
             // Verificar se a caixa de resposta já existe
-            if (replyBox && replyBox.classList.contains('answer_field')) {
-                replyBox.remove(); // Remove a caixa de resposta se ela já existir
+            if (nextBox && nextBox.classList.contains('answer_field')) {
+                nextBox.remove(); // Remove a caixa de resposta se ela já existir
                 return;
             }
 
             // Cria a caixa de resposta
             const boxTemplate = `
-                <form action="" class="answer_field">
+                <form class="answer_field">
                     <img src="https://cdn.pixabay.com/photo/2013/07/12/19/28/grace-hopper-154833_960_720.png" alt="" class="image">
                     <textarea cols="30" rows="10" class="new-answer"></textarea>
                     <input type="submit" class="submit_btn" value="SEND">
                 </form>
             `;
             currentComment.insertAdjacentHTML('afterend', boxTemplate);
-            catchAnswer()
+            processAnswer()
         });
     }
 }
 
-function catchAnswer() {
-    const answer_fields = document.querySelectorAll('.answer_field');
-    for (let answer_field of answer_fields) {
-        answer_field.addEventListener('submit', (e) => {
+function processAnswer() {
+    for (let currentAnswerBox of answerBoxes) {
+        currentAnswerBox.addEventListener('submit', (e) => {
             e.preventDefault();
-            const answer_content = e.target.children[1].value;
-            let commentElement = e.target.previousElementSibling;
+            const answerContent = e.target.children[1].value;
+            let previousClosestComment = e.target.previousElementSibling;
 
-            // procurar pelo elemento com a classe "comment"
-            while (commentElement) {
-                if (commentElement.classList.contains('comment')) {
+            // procurar pelo elemento anterior mais próximo com a classe "comment"
+            while (previousClosestComment) {
+                if (previousClosestComment.classList.contains('comment')) {
                     break;
                 }
-                commentElement = commentElement.previousElementSibling;
+                previousClosestComment = previousClosestComment.previousElementSibling;
             }
 
-            const answerId = e.target.previousElementSibling.dataset.answerId
-            const closestIdComment = commentElement.dataset.id;
+            const answerToAnswerId = e.target.previousElementSibling.dataset.answerId
+            const closestIdComment = previousClosestComment.dataset.id;
 
-            const new_answer_template = {
+            const newAnswerTemplate = {
                 "author": {
                     "name": "Grace",
                     "image": "https://cdn.pixabay.com/photo/2013/07/12/19/28/grace-hopper-154833_960_720.png"
                 },
-                "body": `${answer_content}`,
+                "body": `${answerContent}`,
                 "date": new Date(),
                 "meta": {
                     "votes": 0
                 }
             }
 
-            if(answerId) {
-                postAnswerToAnswer(closestIdComment, answerId, new_answer_template)
+            if(answerToAnswerId) {
+                postAnswerToAnswer(closestIdComment, answerToAnswerId, newAnswerTemplate)
             } else {
-                postNewAnswer(closestIdComment, new_answer_template)
+                postAnswerToComment(closestIdComment, newAnswerTemplate)
             }
         });
+    }
+}
+
+function removeAnswerFields() {
+    for(let answerBox of answerBoxes) {
+        answerBox.remove()
     }
 }
 
