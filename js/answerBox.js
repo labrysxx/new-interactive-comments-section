@@ -1,4 +1,3 @@
-const answerBoxes = document.querySelectorAll('.answer_field');
 
 function createReplyBox() {
     removeAnswerFields()
@@ -32,6 +31,8 @@ function createReplyBox() {
 }
 
 function processAnswer() {
+    const answerBoxes = document.querySelectorAll('.answer_field');
+
     for (let currentAnswerBox of answerBoxes) {
         currentAnswerBox.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -71,6 +72,8 @@ function processAnswer() {
 }
 
 function removeAnswerFields() {
+    const answerBoxes = document.querySelectorAll('.answer_field');
+
     for(let answerBox of answerBoxes) {
         answerBox.remove()
     }

@@ -35,6 +35,7 @@
 
 .date {
     grid-column: 3/4;
+    width: max-content;
 }
 
 .reply_field {

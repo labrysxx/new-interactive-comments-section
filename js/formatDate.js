@@ -4,12 +4,12 @@ function calculateTimeAgo(date) {
 
     const seconds = Math.floor(differenceInTime / 1000);
     if (seconds < 60) {
-        return `${seconds} seconds ago`;
+        return `${seconds} secs ago`;
     }
 
     const minutes = Math.floor(differenceInTime / (1000 * 60));
     if (minutes < 60) {
-        return `${minutes} minutes ago`;
+        return `${minutes} min ago`;
     }
 
     const hours = Math.floor(differenceInTime / (1000 * 3600));
