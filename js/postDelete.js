@@ -146,13 +146,13 @@ function postComment(comment) {
         });
 }
 
-function postAnswerToComment(id, answer) {
-    fetch(`https://comments-l19n.onrender.com/comments/${id}/answers`, {
+function postAnswerToComment(commentId, answerContent) {
+    fetch(`https://comments-l19n.onrender.com/comments/${commentId}/answers`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(answer)
+        body: JSON.stringify(answerContent)
     })
         .then(response => response.json())
         .then(() => {
@@ -163,8 +163,8 @@ function postAnswerToComment(id, answer) {
         });
 }
 
-function postAnswerToAnswer(commentId, answerId, answerContent) {
-    fetch(`https://comments-l19n.onrender.com/comments/${commentId}/answers/${answerId}`, {
+function postAnswerToAnswer(commentId, answerToAnswerId, answerContent) {
+    fetch(`https://comments-l19n.onrender.com/comments/${commentId}/answers/${answerToAnswerId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
