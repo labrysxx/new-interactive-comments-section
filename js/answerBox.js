@@ -73,10 +73,15 @@ function handleAnswerSubmit(e) {
         }
     };
 
+    const commentAnswerRequest = {
+        commentId: closestIdComment,
+        answerContent: newAnswerTemplate
+    };
+
     if (answerToAnswerId) {
-        postAnswerToAnswer(closestIdComment, answerToAnswerId, newAnswerTemplate);
+        postAnswerToAnswer(commentAnswerRequest, answerToAnswerId);
     } else {
-        postAnswerToComment(closestIdComment, newAnswerTemplate);
+        postAnswerToComment(commentAnswerRequest);
     }
 }
 

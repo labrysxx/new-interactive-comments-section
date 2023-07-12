@@ -146,7 +146,7 @@ function postComment(comment) {
         });
 }
 
-function postAnswerToComment(commentId, answerContent) {
+function postAnswerToComment({ commentId, answerContent }) {
     fetch(`https://comments-l19n.onrender.com/comments/${commentId}/answers`, {
         method: 'POST',
         headers: {
@@ -163,7 +163,7 @@ function postAnswerToComment(commentId, answerContent) {
         });
 }
 
-function postAnswerToAnswer(commentId, answerToAnswerId, answerContent) {
+function postAnswerToAnswer({ commentId, answerContent }, answerToAnswerId) {
     fetch(`https://comments-l19n.onrender.com/comments/${commentId}/answers/${answerToAnswerId}`, {
         method: 'POST',
         headers: {
