@@ -37,6 +37,11 @@ function loadCommentsAndAnswers() {
                 const timeAgo = calculateTimeAgo(commentDate);
                 const commentTemplate = `
                     <section class="comment comment-answer" data-id="${mainComment._id}">
+                        <div class="contador">
+                            <span class="upvote">+</span>
+                            <span class="votes">${mainComment.meta.votes}</span>
+                            <span class="downvote">-</span>
+                        </div>
                         <img src="${mainComment.author.image}" class="image" alt="">
                         <span class="author_name">${mainComment.author.name}</span>
                         <span class="date">${timeAgo}</span>
@@ -60,6 +65,11 @@ function loadCommentsAndAnswers() {
                         const answerTimeAgo = calculateTimeAgo(answerDate);
                         const answerTemplate = `
                             <section class="answer comment-answer" data-id="${mainComment._id}" data-answer-id="${answer._id}">
+                              <div class="contador">
+                                  <span class="upvote">+</span>
+                                  <span class="votes">${answer.votes}</span>
+                                  <span class="downvote">-</span>
+                              </div>  
                               <img src="${answer.author.image}" class="image" alt="">
                               <span class="author_name">${answer.author.name}</span>
                               <span class="date">${answerTimeAgo}</span>
@@ -82,6 +92,11 @@ function loadCommentsAndAnswers() {
                                 const answerToAnswerTimeAgo = calculateTimeAgo(answerToAnswerDate);
                                 const answerToAnswerTemplate = `
                                     <section class="answer comment-answer" data-id="${mainComment._id}" data-answer-id="${answer._id}" data-reply-id="${answerToAnswer._id}">
+                                        <div class="contador">
+                                            <span class="upvote">+</span>
+                                            <span class="votes">${answerToAnswer.votes}</span>
+                                            <span class="downvote">-</span>
+                                        </div>
                                         <img src="${answerToAnswer.author.image}" class="image" alt="">
                                         <span class="author_name">${answerToAnswer.author.name}</span>
                                         <span class="date">${answerToAnswerTimeAgo}</span>

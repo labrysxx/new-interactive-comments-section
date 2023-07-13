@@ -4,7 +4,8 @@
     border-radius: 10px;
     padding: 10px;
     margin-top: 10px;
-    grid-template-columns: 80px min-content;
+    grid-template-columns: 50px min-content;
+    grid-column-gap: 5px;
 }
 
 .comment {
@@ -18,28 +19,52 @@
 }
 
 .image {
-    grid-column: 1/2;
+    grid-column: 2/3;
     width: 70px;
     height: 70px;
     object-fit: cover;
     border-radius: 100%;
 }
 
+.contador {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-column: 1/2;
+    grid-row: 1/3;
+    padding: 15px;
+    background-color: var(--light-gray);
+    height: 61px;
+    gap: 5px;
+    border-radius: 10px;
+    color: var(--light-grayish-blue);
+    font-weight: bold;
+}
+
+.votes {
+    color: var(--grayish-blue);
+}
+
+.upvote, .downvote {
+    cursor: pointer;
+}
+
 .author_name {
-    grid-column: 2/3;
+    grid-column: 3/4;
     color: var(--dark-blue);
     font-weight: bold;
     text-transform: lowercase;
     margin-right: 15px;
+    margin-left: 15px;
 }
 
 .date {
-    grid-column: 3/4;
+    grid-column: 4/5;
     width: max-content;
 }
 
 .reply_field {
-    grid-column: 4/5;
+    grid-column: 5/6;
 }
 
 .reply_field, .edit-btn {
@@ -64,11 +89,11 @@
 }
 
 .edit-delete-btns {
-    grid-column: 4/5;
+    grid-column: 5/6;
 }
 
 .text {
-    grid-column: 1/5;
+    grid-column: 2/6;
     word-wrap: anywhere;
 }
 
