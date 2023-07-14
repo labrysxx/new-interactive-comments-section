@@ -22,33 +22,24 @@ function handleVote(event) {
 }
 
 function upVote(event) {
-    if (event.target.classList.contains('upvote')) {
-        if (!userLiked) {
-            let scoreElement = event.target.nextElementSibling;
-            if (scoreElement) {
-                let score = parseInt(scoreElement.innerText);
-                score += 1;
-                scoreElement.innerHTML = score;
-                userLiked = true;
-                userDisliked = false;
-            }
-        }
+    let scoreElement = event.target.nextElementSibling;
+    let score = parseInt(scoreElement.innerText);
+    if (!userLiked && scoreElement) {
+        score += 1;
+        scoreElement.innerHTML = score;
+        userLiked = true;
+        userDisliked = false;
     }
 }
 
+
 function downVote(event) {
-    if (event.target.classList.contains('downvote')) {
-        if (!userDisliked) {
-            let scoreElement = event.target.previousElementSibling;
-            if (scoreElement) {
-                let score = parseInt(scoreElement.innerText);
-                if (score > 0) {
-                    score -= 1;
-                    scoreElement.innerHTML = score;
-                }
-                userDisliked = true;
-                userLiked = false;
-            }
-        }
+    let scoreElement = event.target.previousElementSibling;
+    let score = parseInt(scoreElement.innerText);
+    if (!userDisliked && scoreElement && score > 0) {
+        score -= 1;
+        scoreElement.innerHTML = score;
+        userDisliked = true;
+        userLiked = false;
     }
 }
