@@ -123,6 +123,7 @@ function loadCommentsAndAnswers() {
             deleteSections()
             patch()
             createReplyBox()
+            setLikeCounter()
         })
 }
 
@@ -239,7 +240,7 @@ function deleteComment(commentAnswerToDelete, commentId) {
             if (response.ok) {
                 commentAnswerToDelete.remove();
 
-                // remove as respostas associadas ao comentário
+                // remove as respostas associadas ao comentário excluído
                 const answerSections = document.querySelectorAll(`.answer[data-id="${commentId}"]`);
                 answerSections.forEach(answerSection => answerSection.remove());
             } else {
@@ -259,7 +260,7 @@ function deleteAnswer(commentAnswerToDelete, commentId, answerId) {
             if (response.ok) {
                 commentAnswerToDelete.remove();
 
-                // remove as respostas associadas à resposta
+                // remove as respostas associadas à resposta excluída
                 const answerSections = document.querySelectorAll(`.answer[data-answer-id="${answerId}"]`);
                 answerSections.forEach(answerSection => answerSection.remove());
             } else {
@@ -278,12 +279,6 @@ function deleteAnswerOfAnswer(commentAnswerToDelete, commentId, answerId, answer
         .then(response => {
             if (response.ok) {
                 commentAnswerToDelete.remove();
-
-                // remove as respostas associadas à resposta
-                const answerSections = document.querySelectorAll(`.answer[data-reply-id="${answerAnswerId}"]`);
-                answerSections.forEach(answerSection => answerSection.remove());
-
-                console.log('Resposta excluída com sucesso!');
             } else {
                 console.error('Erro ao excluir resposta:', response.statusText);
             }
